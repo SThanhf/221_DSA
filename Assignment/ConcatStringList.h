@@ -12,10 +12,8 @@ public:
 public:
     static ReferencesList refList;
     static DeleteStringList delStrList;
-
-    // TODO: may provide some attributes
-
-    // start check1
+    // end first
+public:
     int count;
     struct Node
     {
@@ -28,7 +26,6 @@ protected:
     Node *head;
     Node *tail;
     int len;
-    // end check1
 
 public:
     ConcatStringList(const char *);
@@ -41,24 +38,73 @@ public:
     ConcatStringList reverse() const;
     ~ConcatStringList();
 
+    // last period
 public:
     class ReferencesList
     {
         // TODO: may provide some attributes
+    public:
+        struct refNode
+        {
+            /* data */
+            Node *Node_address;
+            refNode *refNode_next;
+            int refC;
+        };
+        refNode *refHead;
+        refNode *refTail;
+        int refNodeCount;
 
     public:
-        int size() const;
-        int refCountAt(int index) const;
-        std::string refCountsString() const;
+        int size() const { return this->refNodeCount; };
+        int refCountAt(int index) const
+        {
+            if (index >= this->refNodeCount)
+                throw std::out_of_range("Index of references list is invalid!");
+            refNode *temp = this->refHead;
+            for (int i = 0; i < index; ++i)
+                temp = temp->refNode_next;
+            return temp->refC;
+        };
+        std::string refCountsString() const
+        {
+            if (this->refNodeCount == 0)
+                return "RefCounts[]";
+            string res = "RefCounts[";
+            for (int i = 0; i < this->refNodeCount; ++i)
+            {
+                res += to_string(this->refCountAt(i));
+            }
+            res += "]";
+            return res;
+        };
     };
 
     class DeleteStringList
     {
         // TODO: may provide some attributes
+    public:
+        struct delNode
+        {
+            ReferencesList::refNode *refNodeHead;
+            ReferencesList::refNode *refNodeTail;
+            delNode *delNode_next;
+        };
+        delNode *delHead;
+        delNode *delTail;
+        int delNodeCount;
 
     public:
-        int size() const;
-        std::string totalRefCountsString() const;
+        int size() const { return this->delNodeCount; };
+        std::string totalRefCountsString() const
+        {
+            if (this->delNodeCount == 0)
+                return "TotalRefCounts[]";
+            string temp = "TotalRefCounts[";
+            temp += to_string(this->delNodeCount);
+            temp += "]";
+            return temp;
+        };
     };
 };
 
