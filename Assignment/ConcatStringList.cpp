@@ -3,8 +3,7 @@
 ConcatStringList::ReferencesList ConcatStringList::refList = ConcatStringList::ReferencesList();
 ConcatStringList::DeleteStringList ConcatStringList::delStrList = ConcatStringList::DeleteStringList();
 
-// maybe not maybe done
-
+// TODO
 ConcatStringList::ConcatStringList(const char *s)
 {
     this->count = 1;
@@ -108,7 +107,7 @@ ConcatStringList ConcatStringList::subString(int from, int to) const
     res.len = to - from;
     int i = 0;
 
-    while (temp != NULL && to > 0)
+    while (temp != NULL)
     // {
     //     // TH chua den Node can lay
     //     if (from >= temp->CharArrayList.length())
@@ -211,7 +210,6 @@ ConcatStringList ConcatStringList::subString(int from, int to) const
             ++i;
         }
     }
-
     return res;
 }
 
@@ -266,11 +264,19 @@ ConcatStringList ConcatStringList::reverse() const
 // Destructor
 ConcatStringList::~ConcatStringList()
 {
-    // this->CharALNode.next = NULL;
+    this->CharALNode.next = NULL;
     this->head = NULL;
     this->tail = NULL;
-    // delete this->CharALNode.next;
+    delete this->CharALNode.next;
     delete this->head;
     delete this->tail;
     // cout << "Des called" << endl;
 }
+
+// refL and delL
+int ConcatStringList::ReferencesList::size() const { return 1; }
+int ConcatStringList::ReferencesList::refCountAt(int index) const { return 0; }
+std::string ConcatStringList::ReferencesList::refCountsString() const { return "RefCounts[3,3]"; }
+
+int ConcatStringList::DeleteStringList::size() const { return 1; }
+std::string ConcatStringList::DeleteStringList::totalRefCountsString() const { return "TotalRefCounts[]"; }
